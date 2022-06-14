@@ -1,0 +1,19 @@
+<img src="static/test.jpg" width="50%" height="50%">
+{% for movie in movies %}
+    <tr>
+        <td>{{ movie.title }}</td>
+        <td>{{ movie.release_year }}</td>
+        <td>{{ movie.url }}</td>
+    </tr>
+    <br>
+{% endfor %}
+<p>Create a new movie</p>
+    <form method="post" url='/movies'>
+        <label for="movie">Movie</label>
+        <br>
+        <input type="text" name="url" placeholder="Movie url"></input>
+        <input type="text" name="title" placeholder="Movie title"></input>
+        <input type="text" name="release_year" placeholder="Movie release_year"></input>
+
+        <button type="submit">Submit</button>
+    </form>
