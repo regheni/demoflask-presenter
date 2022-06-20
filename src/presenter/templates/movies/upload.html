@@ -1,0 +1,76 @@
+{% extends 'index.html' %}
+
+{% block title %}New Movie{% endblock %}
+
+{% block content %}
+
+	<h1>Edit Movie ID {{ movie.id }}</h1>
+	<span style="color:red">
+		{% if err %}
+			{{ err }}
+		{% endif %}
+	</span>
+<div class="content">    
+    <form method="post" action="{{ url_for('movies.update', id=movie.id) }}">
+	    <label for="title">Title</label>
+	    <br>
+	    <input type="text" name="title"
+	           placeholder="Message title"
+	           value="{{ movie['title'] }}"></input>
+	    <br>
+
+	    <input type="text" name="genre"
+	           placeholder="Category type"
+	           value="{{ movie['genre'] }}"></input>
+	    <br>
+	    <input type="text" name="rating"
+	           placeholder="Rating"
+	           value="{{ movie['rating'] }}"></input>
+	    <br>
+	    <input type="text" name="url"
+	           placeholder="Movie URL"
+	           value="{{ movie['url'] }}"></input>
+	    <br>
+	           
+	    <input type="text" name="date_of_scraping"
+	           placeholder="Record Date"
+	           value="{{ movie['date_of_scraping'] }}"></input>
+	    <br>
+
+	    <input type="text" name="director"
+	           placeholder="Director Name"
+	           value="{{ movie['director'] }}"></input>
+	    <br>
+
+	    <input type="text" name="release_year"
+	           placeholder="Release Year"
+	           value="{{ movie['release_year'] }}"></input>
+	    <br>
+
+	    <input type="text" name="top_cast"
+	           placeholder="Top Cast"
+	           value="{{ movie['top_cast'] }}"></input>
+	    <br>
+
+	    <input type="text" name="image_urls"
+	           placeholder="Image URL"
+	           value="{{ movie['image_urls'] }}"></input>
+	    <br>
+
+	    <input type="text" name="images"
+	           placeholder="Local Image URL"
+	           value="{{ movie['images'] }}"></input>
+	    <br>
+	    <br>
+	    <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}
+
+{# 	    			
+<textarea name="content"
+placeholder="Message content"
+rows="15"
+cols="60"
+>{{ request.form['content'] }}</textarea>
+ #}

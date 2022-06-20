@@ -1,0 +1,14 @@
+<p>Movie list</p>
+
+    {% for movie in movies %}
+        <li>
+            {% set local_url = "/movies/{}".format(movie['id']) %}
+            <a href="{{ local_url }}">{{ movie["title"] }}</a>
+
+
+        </li>
+        <hr>
+    {% endfor %}
+
+<br>
+<a href="/movies/newmovie">Add new movie</a>

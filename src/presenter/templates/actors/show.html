@@ -1,0 +1,24 @@
+<p>Actor</p>
+<p>{{actor["name"]}}</p>
+{% set filmography = actor["filmography_movie_name"] %}
+{% set filmography = filmography.replace('"', '') %}
+{% set filmography = filmography.strip("]") %}
+{% set filmography = filmography.strip("[") %}
+{% set movies = filmography.split(", ") %}
+
+
+{% actor.filmography() %}
+// in clasa movie
+
+<ul>
+	{% for movie in movies %}
+        <li>
+            <p>{{movie}}</p>
+
+
+        </li>
+        <hr>
+    {% endfor %}
+</ul>
+
+<!-- <a href="http://127.0.0.1:5000/movies/newmovie">Add new movie</a> -->
