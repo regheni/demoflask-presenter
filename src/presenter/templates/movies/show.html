@@ -1,14 +1,48 @@
-<p>Movie list</p>
+{% extends 'index.html' %}
 
-    {% for movie in movies %}
-        <li>
-            {% set local_url = "/movies/{}".format(movie['id']) %}
-            <a href="{{ local_url }}">{{ movie["title"] }}</a>
+{% block title %}Movie Info{% endblock %}
 
+{% block content %}
 
-        </li>
-        <hr>
-    {% endfor %}
+{% with messages = get_flashed_messages() %}
+<div class=flashes>
+    {% if messages %}
+      <ul >
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+  {% endif %}
+</div>
+{% endwith %}
 
-<br>
-<a href="/movies/newmovie">Add new movie</a>
+<div class="show">
+    <div>
+      <span class="movie-item"> <a href="{{ url_for('movies.edit', id=movie.id) }}"><i>Edit Movie</i></a></span>
+  </div>
+    <div>
+      
+      <h1>{{ movie.title }}</h1>
+      <h3>Movie Info</h3>
+      {#
+      {% for item in movie.__dict__.items() %}
+        <p>{{ item }}} </p>
+      {% endfor %}
+      #}
+      <ul>
+      {% for key, value in movie.items() %}
+        <p>{% if value is string %}
+            <b>{{ key }}</b>: {{value}}</p>
+        <p>{% elif value is sequence %}
+            <b>{{ key }}</b>:
+            {% for item in value %}
+              <li>{{item}}</li>
+            {% endfor %} </p>
+          {% endif %}
+      {% endfor %}
+      </ul>
+
+  </div>
+
+</div>
+{% endblock %}

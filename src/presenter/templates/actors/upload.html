@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+{% block title %}Load a file{% endblock %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+  <div class=flashes>
+    {% if messages %}
+      <ul>
+      {% for message in messages %}
+        <li>{{ message }}</li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endwith %}
+
+  {% if err %}
+    <span style="color:red"> {{ err }} </span>
+  {% endif %}
+
+<div>
+    <h1>Actors: Upload new File</h1>
+        <form method="POST" enctype="multipart/form-data" action="{{ url_for('actors.upload') }}">
+          <input type="file" name="file">
+          <input type="submit" value="Upload">
+        </form>
+</div>
+{% endblock %}

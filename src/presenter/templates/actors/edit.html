@@ -1,15 +1,66 @@
-<p>Actors list</p>
-<ul id="actors">
-    {% for actor in actors %}
-        <li>
-            {% set local_url = "/actors/{}".format(actor['id']) %}
-            <a href="{{ local_url }}">{{ actor["name"] }}</a>
+{% extends 'index.html' %}
+
+{% block title %}New Actor{% endblock %}
+
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+<div class=flashes>
+    {% if messages %}
+      <ul >
+	      {% for message in messages %}
+	        <li>{{ message }}</li>
+	      {% endfor %}
+      </ul>
+	{% endif %}
+</div>
+{% endwith %}
+
+<h1>Edit Actor ID {{ actor.id }}</h1>
 
 
-        </li>
-        <hr>
-    {% endfor %}
-</ul>
+<span style="color:red">
+	{% if err %}
+		{{ err }}
+	{% endif %}
+</span>
 
-<br>
-<a href="/actors">Add new actor</a>
+<div class="content">    
+    <form method="post" action="{{ url_for('actors.update', id=actor.id) }}">
+	    <label for="name">Name</label>
+		    <br>
+		    <input type="text" name="name"
+		           placeholder="Actor name"
+		           value="{{ actor['name'] }}">
+		    </input>
+		    <br>
+
+		<label for="url">URL</label>
+		    <br>
+		    <input type="text" name="url"
+		           placeholder="Actor URL"
+		           value="{{ actor['url'] }}">
+		    </input>
+		    <br>
+
+		<label for="filmography_movie_name">Filmography Movies</label>
+		    <br>
+		    <input type="text" name="filmography_movie_name"
+		           placeholder="Movies Name"
+		           value="{{ actor['filmography_movie_name'] }}">
+		    </input>
+		    <br>
+
+		<label for="filmography_movie_name">Filmography URL</label>
+		    <br>
+		    <input type="text" name="filmography_url"
+		           placeholder="Movie URL"
+		           value="{{ actor['filmography_url'] }}">
+		    </input>
+		    <br>
+		    <br>
+
+	    <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

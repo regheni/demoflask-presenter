@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'index.html' %}
+
+{% block title %}Actors List{% endblock %}
+
+{% block content %}
+<div class="navbar-nav">
+	<ul>
+	    {% if current_page == 1 %}
+	        <li style="float:left">
+	        	<a  href="#">Previous</a></li>
+	    {% else %}
+	        <li style="float:left">
+	        	<a href="{{ url_for('actors.actors', page=current_page - 1, items=per_page) }}">Previous</a></li>
+	    {% endif %}
+	        <li style="float:right">
+	        	<a class="button-next" href="{{ url_for('actors.actors', page=current_page + 1, items=per_page) }}">Next</a></li>
+	</ul>
+</div>
+<div class="center">
+	{{ mess }}
+    {% for actor in actors %}
+    <div>
+    	<ul class="actor">
+	        <li class="actor-item">
+	        	#{{ actor.id }} Name: 
+	        <a href="{{ actor.id }}">{{ actor.name }}</a><br>
+	        </li>
+	        	Actor IMBD page: 
+	        <li class="actor-item">{{ actor.url }}</a></li>
+	        {# <li class="actor-item">{{ actor.filmography_movie_name }}</li> #}
+	    </ul>
+	    <br>
+	</div>
+	{% endfor %}
+</div>
+{% endblock %}

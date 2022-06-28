@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'index.html' %}
+
+{# set active_page = 'home' #}
+
+{% block title %}IMDB Movies List{% endblock %}
+
+{% block content %}
+<div class="navbar-nav">
+	<ul>
+	    {% if current_page == 1 %}
+	        <li style="float:left">
+	        	<a  href="#">Previous</a></li>
+	    {% else %}
+	        <li style="float:left">
+	        	<a href="{{ url_for('movies.movies', page=current_page - 1, items=items_per_page) }}">Previous</a></li>
+	    {% endif %}
+	        <li style="float:right">
+	        	<a class="button-next" href="{{ url_for('movies.movies', page=current_page + 1, items=items_per_page) }}">Next</a></li>
+	</ul>
+</div>
+
+
+	{{ mess }}
+    {% for movie in movies %}
+    <div class="center">
+    	<ul id="movies">
+	        <li class="movie-item"> {{movie.id}} <a href="{{ movie.id }}">{{ movie.title }}</a></li>
+	        {% set imgfile = "images/" + movie.images[1:-1] %}
+	        <img src="{{ url_for('static', filename=imgfile) }}" alt="idmb movie image" class='center'>
+	        <hr>
+	    </ul>
+	    <br>
+	</div>
+	{% endfor %}
+{% endblock %}

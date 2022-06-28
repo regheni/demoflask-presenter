@@ -1,33 +1,89 @@
 {% extends 'index.html' %}
 
-{# set active_page = 'home' #}
-
-{% block title %}IMDB Movies List{% endblock %}
+{% block title %}New Movie{% endblock %}
 
 {% block content %}
-<div class="navbar-nav">
-	<ul>
-	    {% if current_page == 1 %}
-	        <li style="float:left">
-	        	<a  href="#">Previous</a></li>
-	    {% else %}
-	        <li style="float:left">
-	        	<a href="{{ url_for('movies.movies', page=current_page - 1, items=items_per_page) }}">Previous</a></li>
-	    {% endif %}
-	        <li style="float:right">
-	        	<a class="button-next" href="{{ url_for('movies.movies', page=current_page + 1, items=items_per_page) }}">Next</a></li>
-	</ul>
+
+{% with messages = get_flashed_messages() %}
+<div class=flashes>
+    {% if messages %}
+      <ul >
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+      </ul>
+    {% endif %}
 </div>
-	{{ mess }}
-    {% for movie in movies %}
-    <div class="center">
-    	<ul id="movies">
-	        <li class="movie-item"> {{movie.id}} <a href="{{ movie.id }}">{{ movie.title }}</a></li>
-	        {% set imgfile = "images/" + movie.images[1:-1] %}
-	        <img src="{{ url_for('static', filename=imgfile) }}" alt="idmb movie image" class='center'>
-	        <hr>
-	    </ul>
-	    <br>
-	</div>
-	{% endfor %}
+{% endwith %}
+
+    <h1>Edit Movie ID {{ movie.id }}</h1>
+    <span style="color:red">
+        {% if err %}
+            {{ err }}
+        {% endif %}
+    </span>
+
+<div class="content">    
+    <form method="post" action="{{ url_for('movies.update', id=movie.id) }}">
+        <label for="title">Title</label>
+        <br>
+        <input type="text" name="title"
+               placeholder="Message title"
+               value="{{ movie['title'] }}"></input>
+        <br>
+
+        <input type="text" name="genre"
+               placeholder="Category type"
+               value="{{ movie['genre'] }}"></input>
+        <br>
+        <input type="text" name="rating"
+               placeholder="Rating"
+               value="{{ movie['rating'] }}"></input>
+        <br>
+        <input type="text" name="url"
+               placeholder="Movie URL"
+               value="{{ movie['url'] }}"></input>
+        <br>
+               
+        <input type="text" name="date_of_scraping"
+               placeholder="Record Date"
+               value="{{ movie['date_of_scraping'] }}"></input>
+        <br>
+
+        <input type="text" name="director"
+               placeholder="Director Name"
+               value="{{ movie['director'] }}"></input>
+        <br>
+
+        <input type="text" name="release_year"
+               placeholder="Release Year"
+               value="{{ movie['release_year'] }}"></input>
+        <br>
+
+        <input type="text" name="top_cast"
+               placeholder="Top Cast"
+               value="{{ movie['top_cast'] }}"></input>
+        <br>
+
+        <input type="text" name="image_urls"
+               placeholder="Image URL"
+               value="{{ movie['image_urls'] }}"></input>
+        <br>
+
+        <input type="text" name="images"
+               placeholder="Local Image URL"
+               value="{{ movie['images'] }}"></input>
+        <br>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
 {% endblock %}
+
+{#                  
+<textarea name="content"
+placeholder="Message content"
+rows="15"
+cols="60"
+>{{ request.form['content'] }}</textarea>
+ #}

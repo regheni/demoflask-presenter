@@ -1,4 +1,95 @@
-<p>Welcome!</p>
-<a href="http://127.0.0.1:5000/movies/">Movies</a>
-<br>
-<a href="http://127.0.0.1:5000/actors/">Actors</a>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> {% block title %}Home page{% endblock %} </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body> 
+
+    <div class="navbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="{{ url_for('home.index') }}" class="active">Home</a>
+            </li>
+            <li>
+                <a href="{{ url_for('movies.movies') }}" class="nav-link">Movies</a>
+            </li>
+            <li>
+                <a href="{{ url_for('movies.create') }}" class="nav-link">Add Movie</a>
+            </li>
+               
+
+            <li>
+                <a href="{{ url_for('actors.actors') }}" class="nav-link">Actors</a>
+            </li>
+            <li>
+                <a href="{{ url_for('actors.new') }}" class="nav-link">Add Actor</a>
+            </li>
+            <li>
+                <a href="{{ url_for('movies.upload') }}" class="nav-link">Upload JOSN</a>
+            </li>
+
+        </ul>
+    </div>
+    
+    <div class="parent">
+        <div class="navbar-nav child">
+            <form method="GET" enctype="multipart/form-data" action="{{url_for('home.search_results')}}">
+                <label for="search">Search :</label>
+                <input type="search" name="q">
+                <input type="submit" value="submit">
+            </form>  
+        </div>
+        {% if session.get("logged_in") %}
+        <div style="float:right">
+            <div class="child nav-item">
+                    {{ session.get("logged_in") }}
+            </div>
+            <div class="child nav-item">
+                <a href="{{url_for('users.logout')}}">logout</a>
+            </div>
+        </div>
+        {% else %}
+            <div class="child nav-item {{ 'active' if active_page == 'login' }}">
+                    <a href="{{ url_for('users.login') }}">Login</a>
+            </div>
+            
+            <div class="child nav-item {{ 'active' if active_page == 'login' }}">
+                    <a href="{{ url_for('users.register') }}">Register</a>
+            </div>
+        {% endif %}
+    </div>
+    <div class="center">
+    {% block content %} 
+    {% with messages = get_flashed_messages() %}
+      <div class=flashes>
+        {% if messages %}
+          <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    {% endwith %}
+        {# =========== Index Section ======== #}
+        <a href="{{ url_for('movies.movies') }}">The whole movie list</a><br>
+        <a href="{{ url_for('movies.create') }}">Add Movie</a><br>
+        <a href="{{ url_for('actors.actors') }}">Actors List</a><br>
+        <a href="{{ url_for('actors.new') }}">Add Actor</a><br>
+        <a href="{{ url_for('movies.upload') }}">Upload Movie JSON</a><br>
+        <a href="{{ url_for('actors.upload') }}">Upload Actor JSON</a><br>
+        
+
+        <img src="{{ url_for('static', filename='images/test.jpg') }}" width="70%" height="70%">
+        {% if messg %}
+            <br>Upload error: {{ messg }}
+        {% endif %}
+        
+
+    {% endblock %}
+    </div>
+</body>
+</html>

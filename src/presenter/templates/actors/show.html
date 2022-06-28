@@ -1,24 +1,41 @@
-<p>Actor</p>
-<p>{{actor["name"]}}</p>
-{% set filmography = actor["filmography_movie_name"] %}
-{% set filmography = filmography.replace('"', '') %}
-{% set filmography = filmography.strip("]") %}
-{% set filmography = filmography.strip("[") %}
-{% set movies = filmography.split(", ") %}
+{% extends 'index.html' %}
 
+{% block title %}Actor Filmography{% endblock %}
 
-{% actor.filmography() %}
-// in clasa movie
+{% block content %}
 
-<ul>
-	{% for movie in movies %}
-        <li>
-            <p>{{movie}}</p>
+{% with messages = get_flashed_messages() %}
+<div class=flashes>
+    {% if messages %}
+      <ul >
+	      {% for message in messages %}
+	        <li>{{ message }}</li>
+	      {% endfor %}
+      </ul>
+	{% endif %}
+</div>
+{% endwith %}
 
+<span style="color:red">
+	{% if err %}
+		{{ err }}
+	{% endif %}
+</span>
 
-        </li>
-        <hr>
-    {% endfor %}
-</ul>
+<div class="center">
+    <div class="show">
+	    <span> <a href="{{ url_for('actors.edit', id=actor.id) }}"><i>Edit Actor</i></a></span>
+    <div>
+    <div>
+   	
+    	<h1>{{ actor.name }}</h1>
+    	<h3>Filmography</h3>
+    	{% for item in actor.filmography %}
+	    	<p>Movie Name: {{ item[0] }} <br>
+	    		IBDM Source: <a href="{{ item[1] }}"> {{ item[1] }}  </a> </p>
+    	{% endfor %}
 
-<!-- <a href="http://127.0.0.1:5000/movies/newmovie">Add new movie</a> -->
+	</div>
+
+</div>
+{% endblock %}

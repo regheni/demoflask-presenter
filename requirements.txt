@@ -4,3 +4,4 @@ python-configuration>=0.8
 PyYAML==5.4.1
 Flask-SQLAlchemy
 alembic
+pytest
